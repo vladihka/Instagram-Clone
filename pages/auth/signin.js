@@ -1,6 +1,6 @@
 import { getProviders, signIn } from "next-auth/react";
 import Header from "../../components/Header";
-import GoogleProvider from "next-auth/providers/google";
+
 
 export default function signin({providers}){
     return(
