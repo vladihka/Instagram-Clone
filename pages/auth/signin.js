@@ -17,7 +17,7 @@ export default function signin({providers}){
                                 src="https://www.mouton.pl/gfx/blog/2019-05/2019_05_23_05_39_56_instagram-logo-2.png" alt=""/>
                             <p className="text-sm italic my-10 text-center">This app is created for learning purposes</p>
                             <button
-                                onClick={() => signIn({callbackUrl: "/"})}
+                                onClick={() => signIn(provider.id,{ callbackUrl: "/"})}
                                 className="bg-red-400 rounded-lg p-3 text-white hover:bg-red-500">Sign in with Google</button>
                         </div>
                     ))}
