@@ -1,9 +1,4 @@
-import {
-    BookmarkIcon,
-    ChatBubbleLeftEllipsisIcon,
-    EllipsisHorizontalIcon, FaceSmileIcon,
-    HeartIcon
-} from "@heroicons/react/24/outline";
+import {BookmarkIcon, ChatIcon, DotsHorizontalIcon, EmojiHappyIcon, HeartIcon} from "@heroicons/react/outline";
 
 export default function Post({img, userImg, caption, username, id}){
     return(
@@ -14,7 +9,7 @@ export default function Post({img, userImg, caption, username, id}){
                     src={userImg}
                     alt={username}/>
                 <p className="font-bold flex-1 ">{username}</p>
-                <EllipsisHorizontalIcon className="h-5"></EllipsisHorizontalIcon>
+                <DotsHorizontalIcon className="h-5"></DotsHorizontalIcon>
             </div>
 
             <img className="object-cover w-full" src={img} alt=""/>
@@ -22,7 +17,7 @@ export default function Post({img, userImg, caption, username, id}){
             <div className="flex justify-between px-4 pt-4">
                 <div className="flex space-x-4">
                     <HeartIcon className="btn"></HeartIcon>
-                    <ChatBubbleLeftEllipsisIcon className="btn"></ChatBubbleLeftEllipsisIcon>
+                    <ChatIcon className="btn"></ChatIcon>
                 </div>
                 <BookmarkIcon className="btn"></BookmarkIcon>
             </div>
@@ -30,7 +25,7 @@ export default function Post({img, userImg, caption, username, id}){
             <p className="p-5 truncate"><span className="font-bold mr-2">{username}</span>{caption}</p>
 
             <form action="" className="flex items-center p-4">
-                <FaceSmileIcon className="h-7"></FaceSmileIcon>
+                <EmojiHappyIcon className="h-7"></EmojiHappyIcon>
                 <input
                     type="text"
                     className="border-none flex-1 focus:ring-0"

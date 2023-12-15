@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-import {MagnifyingGlassIcon, PlusCircleIcon} from "@heroicons/react/24/outline";
-import {HomeIcon} from "@heroicons/react/20/solid";
-
+import {PlusCircleIcon, SearchIcon} from "@heroicons/react/outline";
+import {HomeIcon} from "@heroicons/react/outline";
 
 export default function Header() {
       return (
@@ -25,7 +24,7 @@ export default function Header() {
 
                   <div className="relative mt-1">
                       <div className="absolute top-2 left-2">
-                          <MagnifyingGlassIcon className={"h-5 text-gray-500"}></MagnifyingGlassIcon>
+                          <SearchIcon className="h-5 text-gray-500"></SearchIcon>
                       </div>
                       <input
                           type="text"
