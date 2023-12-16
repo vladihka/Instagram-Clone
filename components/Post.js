@@ -1,7 +1,9 @@
 import {BookmarkIcon, ChatIcon, DotsHorizontalIcon, EmojiHappyIcon, HeartIcon} from "@heroicons/react/outline";
+import {HeartIcon as HeartIconFilled} from "@heroicons/react/solid";
+
 import {useSession} from "next-auth/react";
 import {useEffect, useState} from "react";
-import {addDoc, collection, onSnapshot, orderBy, query, serverTimestamp} from "firebase/firestore";
+import {addDoc, collection, doc, onSnapshot, orderBy, query, serverTimestamp, setDoc, deleteDoc} from "firebase/firestore";
 import {db} from "../firebase";
 import Moment from 'react-moment';
 
@@ -10,6 +12,8 @@ export default function Post({img, userImg, caption, username, id}){
     const {data:session} = useSession();
     const [comment, setComment] = useState("");
     const [comments, setComments] = useState([]);
+    const [hasLiked, setHasLiked] = useState(false);
+    const [likes, setLikes] = useState([]);
 
     useEffect(() => {
         const unsibscribe = onSnapshot(
@@ -18,6 +22,18 @@ export default function Post({img, userImg, caption, username, id}){
         )
 
     }, [db, id]);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(
+            collection(db, "posts", id, "likes"), (snapshot) => setLikes(snapshot.docs)
+        )
+    }, [db]);
+
+    useEffect(() => {
+        setHasLiked(
+            likes.findIndex(like => like.id === session?.user.uid) !== -1
+        )
+    }, [likes]);
 
     async function sentComment(event){
         event.preventDefault();
@@ -29,6 +45,17 @@ export default function Post({img, userImg, caption, username, id}){
             userImage: session.user.image,
             timestamp: serverTimestamp(),
         })
+    }
+
+    async function likePost(){
+        if(hasLiked){
+            await deleteDoc(doc(db, "posts", id, "likes", session.user.uid))
+        }
+        else{
+            await setDoc(doc(db, "posts", id, "likes", session.user.uid), {
+                username: session.user.username,
+            })
+        }
     }
 
     return(
@@ -47,7 +74,15 @@ export default function Post({img, userImg, caption, username, id}){
             {session && (
                 <div className="flex justify-between px-4 pt-4">
                     <div className="flex space-x-4">
-                        <HeartIcon className="btn"></HeartIcon>
+                        {hasLiked ? (
+                            <HeartIconFilled
+                                onClick={likePost}
+                                className="btn text-red-400"></HeartIconFilled>
+                        ) : (
+                            <HeartIcon
+                                onClick={likePost}
+                                className="btn"></HeartIcon>
+                        )}
                         <ChatIcon className="btn"></ChatIcon>
                     </div>
                     <BookmarkIcon className="btn"></BookmarkIcon>
