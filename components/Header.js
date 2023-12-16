@@ -5,12 +5,15 @@ import {HomeIcon} from "@heroicons/react/outline";
 import {useSession, signIn, signOut} from "next-auth/react";
 import {useRecoilState} from "recoil";
 import {modalState} from "../atom/modalAtom";
+import {useRouter} from "next/router";
 
 export default function Header() {
 
     const [open, setOpen] = useRecoilState(modalState);
 
     const {data:session} = useSession();
+
+    const router = useRouter();
     //console.log(session);
     return (
         <div className="shadow-sm border-b sticky top-0 bg-white z-30">
@@ -20,6 +23,7 @@ export default function Header() {
                         src="http://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png"
                         layout='fill'
                         className="object-contain"
+                        onClick={() => router.push("/")}
                     />
                 </div>
                 <div className="cursor-pointer h-24 w-10 relative  lg:hidden">
@@ -42,7 +46,9 @@ export default function Header() {
                     />
                 </div>
                 <div className="flex space-x-4 items-center">
-                    <HomeIcon className="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"></HomeIcon>
+                    <HomeIcon
+                        onClick={() => router.push("/")}
+                        className="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"></HomeIcon>
                     {session ? (
                         <>
                             <PlusCircleIcon
